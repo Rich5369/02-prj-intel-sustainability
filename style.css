@@ -1,1 +1,175 @@
-/* Add your CSS here */
+/* Keep the page easy to read and use Intel's familiar blue palette. */
+body {
+	margin: 0;
+	color: #17213c;
+	font-family: Arial, sans-serif;
+	background-color: #f4f8fc;
+}
+
+/* The hero introduces the sustainability timeline with strong contrast. */
+.hero {
+	min-height: 480px;
+	padding: 48px 24px;
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+	/* Intel blue provides the branded background and strong text contrast. */
+	background-color: #0068b5;
+	background-image: linear-gradient(135deg, #003c71, #0068b5 55%, #00c7fd);
+}
+
+.hero-content {
+	width: 100%;
+	max-width: 900px;
+	margin: 0 auto;
+	text-align: center;
+	color: white;
+}
+
+.hero img {
+	display: block;
+	width: 125px;
+	height: auto;
+	margin: 0 auto 48px;
+	/* The white logo remains readable over the blue gradient. */
+	filter: brightness(0) invert(1);
+}
+
+.hero h1 {
+	max-width: 760px;
+	margin: 0 auto 24px;
+	font-size: 64px;
+	line-height: 1.05;
+	font-weight: 700;
+}
+
+.hero p {
+	max-width: 680px;
+	margin: 0 auto;
+	font-size: 21px;
+	line-height: 1.6;
+}
+
+/* Large screens show milestones in a horizontal scrolling timeline. */
+.timeline {
+	display: flex;
+	gap: 24px;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	max-width: none;
+	margin: 0;
+	padding: 64px 32px 24px;
+	box-sizing: border-box;
+}
+
+.timeline-card {
+	position: relative;
+	flex: 0 0 calc((100% - 48px) / 3);
+	box-sizing: border-box;
+	scroll-snap-align: start;
+	margin: 0 0 16px;
+	padding: 28px;
+	border-top: 5px solid #00c7fd;
+	border-radius: 12px;
+	background-color: white;
+	box-shadow: 0 4px 14px rgba(0, 60, 113, 0.12);
+}
+
+.timeline-card::before {
+	content: "";
+	position: absolute;
+	left: 32px;
+	top: -14px;
+	width: 18px;
+	height: 18px;
+	border: 4px solid #f4f8fc;
+	border-radius: 50%;
+	background-color: #0068b5;
+}
+
+.timeline-card h2 {
+	margin: 0 0 8px;
+	color: #0068b5;
+	font-size: 36px;
+}
+
+.timeline-card h3 {
+	margin: 0 0 16px;
+	color: #17213c;
+	font-size: 24px;
+}
+
+.timeline-card img {
+	display: block;
+	width: 100%;
+	max-width: 500px;
+	height: auto;
+	margin-bottom: 18px;
+	border-radius: 8px;
+}
+
+.timeline-card p {
+	margin: 0;
+	font-size: 17px;
+	line-height: 1.6;
+}
+
+/* Wide screens show four timeline cards at a time. */
+@media (min-width: 1024px) {
+	.timeline {
+		width: calc(100% - 64px);
+		margin: 0 32px;
+		padding: 64px 32px 24px 0;
+	}
+
+	.timeline-card {
+		flex-basis: calc((100% - (3 * 24px)) / 4);
+	}
+}
+
+/* Tablet screens show two timeline cards at a time. */
+@media (min-width: 480px) and (max-width: 800px) {
+	.timeline-card {
+		flex-basis: calc((100% - 24px) / 2);
+	}
+}
+
+/* On very small screens, show one milestone at a time and reduce the hero size. */
+@media (max-width: 479px) {
+	.timeline {
+		display: flex;
+		gap: 16px;
+		overflow-x: auto;
+		padding: 48px 20px 20px;
+	}
+
+	.timeline-card {
+		flex: 0 0 100%;
+		margin: 0 0 16px;
+		border-top: 5px solid #00c7fd;
+		border-left: 0;
+		border-radius: 12px;
+	}
+
+	.timeline-card::before {
+		left: 32px;
+		top: -14px;
+	}
+
+	.hero {
+		min-height: 520px;
+		padding: 36px 20px;
+	}
+
+	.hero img {
+		margin-bottom: 36px;
+	}
+
+	.hero h1 {
+		font-size: 42px;
+	}
+
+	.hero p {
+		font-size: 18px;
+	}
+}
