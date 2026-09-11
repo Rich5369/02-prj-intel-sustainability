@@ -53,9 +53,12 @@ body {
 /* Large screens show milestones in a horizontal scrolling timeline. */
 .timeline {
 	display: flex;
+	flex-flow: row nowrap;
 	gap: 24px;
 	overflow-x: auto;
+	overflow-y: visible;
 	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
 	max-width: none;
 	margin: 0;
 	padding: 64px 32px 24px;
@@ -66,8 +69,10 @@ body {
 	position: relative;
 	display: grid;
 	grid-template-columns: minmax(0, 1fr);
-	flex: 0 0 calc((100% - 48px) / 3);
+	/* A fixed basis keeps every milestone readable and prevents flex shrinking. */
+	flex: 0 0 320px;
 	min-width: 280px;
+	max-width: 320px;
 	box-sizing: border-box;
 	scroll-snap-align: start;
 	margin: 0 0 16px;
@@ -84,6 +89,13 @@ body {
 	transform: translateY(-6px);
 	border-color: #7ccceb;
 	border-top-color: #00c7fd;
+	box-shadow: 0 12px 28px rgba(0, 60, 113, 0.2);
+}
+
+.timeline-card:focus-visible {
+	outline: 3px solid #0068b5;
+	outline-offset: 4px;
+	transform: translateY(-6px);
 	box-shadow: 0 12px 28px rgba(0, 60, 113, 0.2);
 }
 
@@ -121,7 +133,7 @@ body {
 	width: 100%;
 	max-width: 500px;
 	height: auto;
-	aspect-ratio: 5 / 2;
+	aspect-ratio: 4 / 3;
 	object-fit: cover;
 	margin-bottom: 0;
 	border-radius: 8px;
@@ -152,43 +164,49 @@ body {
 	transition: opacity 0.35s ease, visibility 0.35s ease;
 }
 
-.timeline-card:hover p {
+.timeline-card:hover p,
+.timeline-card:focus p {
 	opacity: 1;
 	visibility: visible;
 }
 
-.timeline-card:hover img {
+.timeline-card:hover img,
+.timeline-card:focus img {
 	filter: brightness(0.52) blur(2px);
 }
 
-/* Wide screens show four timeline cards at a time. */
-@media (min-width: 1024px) {
-	.timeline {
-		width: calc(100% - 64px);
-		margin: 0 32px;
-		padding: 64px 32px 24px 0;
-	}
-
-	.timeline-card {
-		flex-basis: calc((100% - (3 * 24px)) / 4);
-	}
+.timeline-instructions {
+	margin: 0;
+	padding: 0 32px 32px;
+	color: #44546f;
+	text-align: center;
+	font-size: 14px;
 }
 
 /* Smaller screens stack milestones vertically without horizontal scrolling. */
 @media (max-width: 800px) {
 	.timeline {
 		flex-direction: column;
-		overflow-x: hidden;
+		overflow-x: visible;
 		scroll-snap-type: none;
 		padding: 48px 20px 20px;
 	}
 
 	.timeline-card {
-		flex: 0 1 auto;
+		flex: none;
 		width: 100%;
 		min-width: 0;
+		max-width: none;
 		margin-bottom: 0;
 		overflow-wrap: anywhere;
+	}
+
+	.timeline-card img {
+		max-width: 100%;
+	}
+
+	.timeline-instructions {
+		padding: 0 20px 28px;
 	}
 }
 
