@@ -64,15 +64,27 @@ body {
 
 .timeline-card {
 	position: relative;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
 	flex: 0 0 calc((100% - 48px) / 3);
+	min-width: 280px;
 	box-sizing: border-box;
 	scroll-snap-align: start;
 	margin: 0 0 16px;
 	padding: 28px;
+	border: 1px solid #d7e6f3;
 	border-top: 5px solid #00c7fd;
 	border-radius: 12px;
-	background-color: white;
+	background-color: #ffffff;
 	box-shadow: 0 4px 14px rgba(0, 60, 113, 0.12);
+	transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.timeline-card:hover {
+	transform: translateY(-6px);
+	border-color: #7ccceb;
+	border-top-color: #00c7fd;
+	box-shadow: 0 12px 28px rgba(0, 60, 113, 0.2);
 }
 
 .timeline-card::before {
@@ -91,27 +103,62 @@ body {
 	margin: 0 0 8px;
 	color: #0068b5;
 	font-size: 36px;
+	line-height: 1.1;
 }
 
 .timeline-card h3 {
 	margin: 0 0 16px;
+	min-height: 2.4em;
 	color: #17213c;
 	font-size: 24px;
+	line-height: 1.2;
 }
 
 .timeline-card img {
+	grid-column: 1;
+	grid-row: 3;
 	display: block;
 	width: 100%;
 	max-width: 500px;
 	height: auto;
-	margin-bottom: 18px;
+	aspect-ratio: 5 / 2;
+	object-fit: cover;
+	margin-bottom: 0;
 	border-radius: 8px;
+	transition: filter 0.35s ease;
 }
 
 .timeline-card p {
+	grid-column: 1;
+	grid-row: 3;
+	z-index: 1;
+	align-self: stretch;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
 	margin: 0;
-	font-size: 17px;
-	line-height: 1.6;
+	min-height: 0;
+	padding: 16px;
+	overflow-y: auto;
+	border-radius: 8px;
+	color: #ffffff;
+	background-color: rgba(0, 35, 65, 0.68);
+	text-align: center;
+	opacity: 0;
+	visibility: hidden;
+	font-size: 14px;
+	line-height: 1.4;
+	transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.timeline-card:hover p {
+	opacity: 1;
+	visibility: visible;
+}
+
+.timeline-card:hover img {
+	filter: brightness(0.52) blur(2px);
 }
 
 /* Wide screens show four timeline cards at a time. */
@@ -127,35 +174,26 @@ body {
 	}
 }
 
-/* Tablet screens show two timeline cards at a time. */
-@media (min-width: 480px) and (max-width: 800px) {
-	.timeline-card {
-		flex-basis: calc((100% - 24px) / 2);
-	}
-}
-
-/* On very small screens, show one milestone at a time and reduce the hero size. */
-@media (max-width: 479px) {
+/* Smaller screens stack milestones vertically without horizontal scrolling. */
+@media (max-width: 800px) {
 	.timeline {
-		display: flex;
-		gap: 16px;
-		overflow-x: auto;
+		flex-direction: column;
+		overflow-x: hidden;
+		scroll-snap-type: none;
 		padding: 48px 20px 20px;
 	}
 
 	.timeline-card {
-		flex: 0 0 100%;
-		margin: 0 0 16px;
-		border-top: 5px solid #00c7fd;
-		border-left: 0;
-		border-radius: 12px;
+		flex: 0 1 auto;
+		width: 100%;
+		min-width: 0;
+		margin-bottom: 0;
+		overflow-wrap: anywhere;
 	}
+}
 
-	.timeline-card::before {
-		left: 32px;
-		top: -14px;
-	}
-
+/* Reduce the hero size on small phones. */
+@media (max-width: 479px) {
 	.hero {
 		min-height: 520px;
 		padding: 36px 20px;
